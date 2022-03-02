@@ -36,7 +36,13 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         //
+        Brand::create($request->only('name'));
+        return response()->json(['data' => 'created'], 200);
     }
+    // public function storing(Request $request){
+    //     Brand::create($request->only('name'));
+    //     return response()->json(['data' => 'created'], 200);
+    // }
 
     /**
      * Display the specified resource.

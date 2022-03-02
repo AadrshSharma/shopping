@@ -15,4 +15,7 @@ class HomeController extends Controller
     public function Category(){
         return Inertia::render('Category');
     }
+    public function brand(){
+        return Inertia::render('Brand');
+    }
 }

@@ -30,3 +30,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 Route::get('adminpanel',[HomeController::class,'adminp']);
 Route::get('category',[HomeController::class,'Category']);
+Route::get('brand',[HomeController::class,'Brand']);

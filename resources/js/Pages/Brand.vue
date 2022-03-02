@@ -12,7 +12,7 @@
                   </g>
                </g>
             </svg>
-            <span class="pl-2 mx-1">Add Category</span>
+            <span class="pl-2 mx-1">Add Brand</span>
          </button>
     <div class=" bg-white flex ml-4">
        <div class="py-3 px-3  bg-white rounded shadow-xl">
@@ -33,7 +33,7 @@
 <script>
 import layout from "../Components/Menus/layout";
 export default{
-    name:'Category',
+    name:'Brand',
     components:{layout},
     data(){
         return{
@@ -45,7 +45,7 @@ export default{
             const payload= {
                 name:this.name
             }
-            axios.post('/api/category',payload).then(response =>{
+            axios.post('/api/brand',payload).then(response =>{
                 if(response.status === 200){
                     // this.$inertia.get('view');
                 }
