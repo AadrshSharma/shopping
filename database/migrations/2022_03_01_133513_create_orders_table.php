@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->Integer('order_id');
-            $table->float('net_amount');
+            $table->unsignedBigInteger('order_id');
+            $table->decimal('net_amount', $precision = 8, $scale = 2);
             $table->integer('tax');
-            $table->float('gross_amount');
+            $table->decimal('gross_amount', $precision = 8, $scale = 2);
             $table->longText('biling_address');
             $table->unsignedBigInteger('biling_country_id');
             $table->unsignedBigInteger('biling_state_id');
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->enum('package_status',['Completed','Processing stock','Ready For Packing','Deliverd','Received']);
             $table->date('transaction_date');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            // $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('biling_country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->foreign('biling_state_id')->references('id')->on('states')->onDelete('cascade');
             $table->foreign('biling_city_id')->references('id')->on('cities')->onDelete('cascade');
