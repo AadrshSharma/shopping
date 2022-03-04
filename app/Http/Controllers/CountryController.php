@@ -15,6 +15,9 @@ class CountryController extends Controller
     public function index()
     {
         //
+        $data = Country::all();
+        return response()->json(['data' => $data], 200);
+
     }
 
     /**
@@ -36,6 +39,8 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         //
+        Country::create($request->only('name'));
+        return response()->json(['data' => 'created'], 200);
     }
 
     /**
@@ -67,9 +72,14 @@ class CountryController extends Controller
      * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Country $country)
+    public function update(Request $request,$id)
     {
         //
+        $country = Country::where('id',$id)->first();
+
+        $data = $request->only('name');
+
+        $country->update($data);
     }
 
     /**
@@ -78,8 +88,10 @@ class CountryController extends Controller
      * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy($id)
     {
         //
+        $data = Country::where('id', $id)->first();
+        $data->delete();
     }
 }

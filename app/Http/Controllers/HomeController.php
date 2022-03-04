@@ -18,4 +18,12 @@ class HomeController extends Controller
     public function brand(){
         return Inertia::render('Brand');
     }
+    public function product(){
+        return Inertia::render('Product');
+    }
+    public function reall(){
+
+        return Inertia::render('Reall');
+    }
+
 }

@@ -15,6 +15,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $data = Category::all();
+        return response()->json(['data' => $data], 200);
 
     }
 
@@ -71,9 +73,14 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request,$id)
     {
         //
+        $brand = Category::where('id',$id)->first();
+
+        $data = $request->only('name');
+
+        $brand->update($data);
     }
 
     /**
@@ -82,8 +89,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
         //
+        $data = Category::where('id', $id)->first();
+        $data->delete();
     }
 }

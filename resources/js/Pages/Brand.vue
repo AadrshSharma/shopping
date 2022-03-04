@@ -1,57 +1,142 @@
 <template>
-    <layout>
-       <div class=" ml-6">
-         <button type="button" class="relative flex justify-center items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize   bg-black rounded-md hover:bg-gray-900  focus:outline-none   transition duration-300 transform active:scale-95 ease-in-out">
-            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
-               <g>
-                  <rect fill="none" height="24" width="24"></rect>
-               </g>
-               <g>
-                  <g>
-                     <path d="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z"></path>
-                  </g>
-               </g>
-            </svg>
-            <span class="pl-2 mx-1">Add Brand</span>
-         </button>
-    <div class=" bg-white flex ml-4">
-       <div class="py-3 px-3  bg-white rounded shadow-xl">
+<div class="flex space-x-4">
+      <div class="justify-between rounded-xl mt-4 p-4 bg-white shadow-lg">
+        <h1 class="text-xl font-bold text-gray-800 mt-4">Brands
+            <button  @click="openModal = true" class="border-2 border-blue-500 rounded-full font-bold ml-80 text-blue-500 px-3 py-1 transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white mr-6">
+               Brands
+            </button>
+        </h1>
+        <div class="flow-root">
+        <ul  role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+            <li  v-for="(item, index) in tableData" :key="index.id" class="py-3 sm:py-4">
+                <div class="flex items-center space-x-4">
 
-           <div class="mb-3">
-               <label for="name" class=" text-gray-800 font-bold">Name:</label>
-               <input v-model="name" type="text" id="name" placeholder="username" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600" />
-           </div>
-           <button type="submit" @click.prevent="submit" class="cursor-pointer py-2 px-4  mt-6 bg-indigo-500 text-white font-bold  text-center rounded">Add</button>
+                    <div class="flex-1 min-w-0">
+                        <p  @click="editModal(item)" class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                          {{item.id}} {{item.name}}
+                        </p>
 
-      </div>
+                    </div>
+                    <button type="submit" @click.prevent="Destroy(item.id)" class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-red-500  " fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                       </svg>
+                    </button>
+                </div>
+            </li>
+        </ul>
+   </div>
+
+           <div v-if="openModal" class="w-full h-screen-20 bg-gray-900 z-50 bg-opacity-50 fixed top-0 right-0 left-0 bottom-0">
+            <div class="w-full h-full flex">
+                <div class="bg-white rounded-md shadow-md m-auto p-6" style="width: 440px;">
+                    <div class="flex items-center justify-between">
+                        <div class="text-base font-medium">Add Brand</div>
+                    </div>
+                    <div class="w-full my-6">
+                        <input v-model="name" maxlength="20" type="text" class="text-sm font-medium text-gray-700 rounded w-full border border-gray-300 focus:outline-none">
+                        <span v-if="errors && errors.name" class="text-xs text-red-600">{{ errors.name[0]}}</span>
+
+                    </div>
+                    <div class="w-full flex items-center">
+                        <button @click.prevent="openModal = false" class="px-4 py-2 rounded-md border border-red-500 hover:bg-red-500 hover:text-white text-sm font-medium text-red-500 focus:outline-none">Cancel</button>
+                        <button type="submit" @click.prevent="submit" class="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white focus:outline-none ml-6">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+           <div v-if="openModal2" class="w-full h-screen-20 bg-gray-900 z-50 bg-opacity-50 fixed top-0 right-0 left-0 bottom-0">
+            <div class="w-full h-full flex">
+                <div class="bg-white rounded-md shadow-md m-auto p-6" style="width: 440px;">
+                    <div class="flex items-center justify-between">
+                        <div class="text-base font-medium">Edit Brand</div>
+                    </div>
+                    <div class="w-full my-6">
+                        <input v-model="name_edit" maxlength="20" type="text"  class="text-sm font-medium text-gray-700 rounded w-full border border-gray-300 focus:outline-none">
+                        <span v-if="errors && errors.name" class="text-xs text-red-600">{{ errors.name[0]}}</span>
+
+                    </div>
+                    <div class="w-full flex items-center">
+                        <button @click.prevent="openModal2 = false" class="px-4 py-2 rounded-md border border-red-500 hover:bg-red-500 hover:text-white text-sm font-medium text-red-500 focus:outline-none">Cancel</button>
+                        <button type="submit" @click.prevent="editData(brand_id)"  class="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white focus:outline-none ml-6">Edit</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
-  </div>
+</div>
 
 
-    </layout>
 </template>
 <script>
-import layout from "../Components/Menus/layout";
+//import layout from "../Components/Menus/layout";
 export default{
     name:'Brand',
-    components:{layout},
+    // components:{layout},
     data(){
         return{
-            name:''
+           
+            name:'',
+            name_edit:'',
+            brand_id:'',
+             openModal: false,
+             tableData:[],
+             openModal2: false,
         }
     },
     methods:{
+        editModal(ele){
+            this.name_edit = ele.name
+            this.brand_id = ele.id
+            this.openModal2 = true
+        },
         submit(){
             const payload= {
                 name:this.name
             }
             axios.post('/api/brand',payload).then(response =>{
                 if(response.status === 200){
-                    // this.$inertia.get('view');
+                    this.$inertia.get('reall');
+                }
+            })
+        },
+        fatchData(){
+            axios.get('/api/brand').then(response =>{
+                if(response.status === 200){
+                  this.tableData = response.data.data
+                }
+            })
+        },
+        Destroy(id){
+            // const payload = {
+            //     id: id
+            //    }
+             axios.delete('/api/brand/'+id).then(response =>{
+                if(response.status === 200){
+                   this.$inertia.get('reall');
+                }
+            })
+        },
+         editData(brand_id){
+            const payload = { 
+                // id:this.brand_id,
+                name:this.name_edit
+               }
+             axios.put('/api/brand/'+brand_id,payload).then(response =>{
+                if(response.status === 200){
+                   this.$inertia.get('reall');
                 }
             })
         }
+    },
+    created(){
+        this.fatchData();
+        
+        }
 
-    }
 }
 </script>

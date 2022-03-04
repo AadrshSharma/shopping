@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
+use function GuzzleHttp\Promise\all;
+
 class BrandController extends Controller
 {
     /**
@@ -15,6 +17,8 @@ class BrandController extends Controller
     public function index()
     {
         //
+        $data = Brand::all();
+        return response()->json(['data' => $data], 200);
     }
 
     /**
@@ -24,6 +28,7 @@ class BrandController extends Controller
      */
     public function create()
     {
+
         //
     }
 
@@ -50,9 +55,10 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show(Request $request)
     {
         //
+
     }
 
     /**
@@ -73,9 +79,14 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(Request $request, $id)
     {
         //
+        $brand = Brand::where('id',$id)->first();
+
+        $data = $request->only('name');
+
+        $brand->update($data);
     }
 
     /**
@@ -84,8 +95,16 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
         //
+        $data = Brand::where('id', $id)->first();
+        $data->delete();
     }
+    // public function delete(Request $request)
+    // {
+    //     //
+    //     $data = Brand::where('id', $request->id)->first();
+    //     $data->delete();
+    // }
 }

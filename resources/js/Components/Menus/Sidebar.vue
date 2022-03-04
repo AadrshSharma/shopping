@@ -39,7 +39,7 @@
                 <li class="h-10 flex items-center px-6 text-xs font-normal" style="color: #4c4e6f">MENUS</li>
 
 <!--                //Super Admin & Admin-->
-                <li v-for="(item, index) in delivery_manager_menu"  class="px-6 py-2.5 cursor-pointer">
+                <li v-for="(item, index) in delivery_manager_menu"  :key="index.id" class="px-6 py-2.5 cursor-pointer">
                     <a :href="item.path" @click="item.isOpen = !item.isOpen" class="flex items-center justify-between text-gray-400 hover:text-gray-100">
                         <div class="flex items-center">
                             <div v-html="item.icon"></div>
@@ -106,7 +106,7 @@ export default {
                         '</g>\n' +
                         '</svg>',
                     name:'Products',
-                    path:'/category',
+                    path:'/product',
                     isOpen:false,
                     child:[]
                 },
@@ -117,8 +117,8 @@ export default {
                         '<path d="M9.35406592,12 L14.6459341,12 C15.4637433,12 16.1991608,12.4979019 16.5028875,13.2572186 L19.4514437,20.6286093 C19.6565571,21.1413928 19.4071412,21.7233633 18.8943577,21.9284767 C18.7762374,21.9757248 18.6501865,22 18.522967,22 L5.47703296,22 C4.92474821,22 4.47703296,21.5522847 4.47703296,21 C4.47703296,20.8727806 4.50130816,20.7467296 4.54855627,20.6286093 L7.49711254,13.2572186 C7.80083924,12.4979019 8.53625675,12 9.35406592,12 Z" fill="currentColor"/>\n' +
                         '</g>\n' +
                         '</svg>',
-                    name:'Orders',
-                    path:'/category',
+                    name:'Setting',
+                    path:'/setting',
                     isOpen:false,
                     child:[]
                 },

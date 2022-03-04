@@ -29,5 +29,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 Route::get('adminpanel',[HomeController::class,'adminp']);
+Route::get('product',[HomeController::class,'product']);
 Route::get('category',[HomeController::class,'Category']);
 Route::get('brand',[HomeController::class,'Brand']);
+Route::get('reall',[HomeController::class,'reall']);
+

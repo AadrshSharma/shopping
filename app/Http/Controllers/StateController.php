@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\State;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,8 @@ class StateController extends Controller
     public function index()
     {
         //
+        $data = State::all();
+        return response()->json(['data' => $data], 200);
     }
 
     /**
@@ -36,6 +39,8 @@ class StateController extends Controller
     public function store(Request $request)
     {
         //
+        State::create($request->only('c_id','name'));
+        return response()->json(['data' => 'created'], 200);
     }
 
     /**
@@ -47,6 +52,7 @@ class StateController extends Controller
     public function show(State $state)
     {
         //
+       
     }
 
     /**
@@ -67,9 +73,14 @@ class StateController extends Controller
      * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, State $state)
+    public function update(Request $request,$id)
     {
         //
+        $brand = State::where('id',$id)->first();
+
+        $data = $request->only('c_id','name');
+
+        $brand->update($data);
     }
 
     /**
@@ -78,8 +89,10 @@ class StateController extends Controller
      * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function destroy(State $state)
+    public function destroy($id)
     {
         //
+        $data = State::where('id', $id)->first();
+        $data->delete();
     }
 }

@@ -15,6 +15,8 @@ class CityController extends Controller
     public function index()
     {
         //
+        $data = City::all();
+        return response()->json(['data' => $data], 200);
     }
 
     /**
@@ -36,6 +38,8 @@ class CityController extends Controller
     public function store(Request $request)
     {
         //
+        City::create($request->only('s_id','name'));
+        return response()->json(['data' => 'created'], 200);
     }
 
     /**
@@ -67,9 +71,14 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(Request $request, $id)
     {
         //
+        $brand = City::where('id',$id)->first();
+
+        $data = $request->only('c_id','name');
+
+        $brand->update($data);
     }
 
     /**
@@ -78,8 +87,10 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function destroy(City $city)
+    public function destroy($id)
     {
         //
+        $data = City::where('id', $id)->first();
+        $data->delete();
     }
 }
